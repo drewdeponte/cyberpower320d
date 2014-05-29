@@ -1,0 +1,19 @@
+Step By Step Instructions
+=========================
+1.) Open up the file Makefile in your favorite editor. (vim)
+2.) Edit the Local Configuration section to fit your needs (save it)
+3.) $ make
+4.) $ su
+      password:
+5.) $ make install
+6.) If you don't want to manually start the daemon each time, just
+    add it to your rc.local file. (Info on this can be found in the README)
+7.) You Are Done Have Fun! (Next time you re-boot it will start the daemon)
+NOTE: If you dont wan't to reboot you can just execute the rc.local script
+by doing
+	(Linux)
+	$ source /etc/rc.d/rc.local
+	(OpenBSD)
+	$ source /etc/rc.local
+
+END OF FILE

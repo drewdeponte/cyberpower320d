@@ -1,0 +1,79 @@
+What Is It?
+-----------
+	cyberpower320d is a UPS monitor specificly written for the
+	CyberPower 320SL UPS. Despite the fact that it is written
+	specificaly for one UPS it has been know to work on other
+	UPSs such as CyberPower Power99 and Power2000 UPSs. If
+	you find that it works on your ups and it isn't listed
+	above please notify me at cyphactor@@socal.rr.com.
+
+How It Works!
+-------------
+	Basically what happens is that the UPS notifies the box(comp)
+	when it enters one of its three states(Power OK, Power FAIL, and
+	Power LOW). Power OK is when the UPS is running and being charged.
+	Power FAIL is when the UPS battery is what is running everything
+	and the UPS is not being charged. Power LOW is when the UPS
+	hasn't returned to Power OK state and it is running out of
+	battery life. When the Power LOW state is hit, cyberpower320d
+	will execute the specified shut down script(look below in the
+	Program Usage section). If it hits Power fail state but still
+	has a lot of battery life it will print a message saying POWER FAILING.
+	This would be a good time to save all files currently being worked on
+	because soon enough it will enter Power LOW state and execute the
+	shutdown script and you wont have a chance to save your work.
+	In many cases the power will be restored before your UPS enters
+	Power LOW state and cyberpower320d will react by printing a message
+	saying POWER RESTORED to notify you that it is no longer running
+	on the battery and that the battery is being charged. Thats about
+	it, if you have any questions pleace e-mail me at CyPhAcToR@@socal.rr.com
+
+Install
+-------
+	Read the INSTALL file.
+
+Program Usage
+-------------
+	cyberpower320d <serial port> <shutdown script> &
+	cyberpower320d requires 2 arguments be passed to it.
+	1.) <serial port>
+	2.) <shutdown script>
+
+	<serial port> should be replaced with the value of the serial port.
+	On most linux machines it is either /dev/ttyS0 or /dev/ttyS1.
+	On most OpenBSD machines it is either /dev/cua00 or /dev/cua01.
+
+	<shutdown script> should be replace with the string that you want to
+	be executed when the UPS is running out of battery juice.
+	This is usually some form of shutdown or halt.
+	I suggest reading your man pages for shutdown and halt, decide
+	which one you want to use and decide which arguments you want to
+	use and then replace <shutdown script> with it.
+	Personally I use "/sbin/shutdown -h now" on my linux box and
+	"/sbin/shutdown -h -p now" on my OpenBSD box.
+
+	Example:
+	(Linux)
+	$ ./cyberpower320d /dev/ttyS0 "/sbin/shutdown -h now" &
+	(OpenBSD)
+	$ ./cyberpower320d /dev/cua00 "/sbin/shutdown -h -p now" &
+
+Insert in rc.local file
+-----------------------
+	If you do not want to execute the aboce each time you re-boot
+	you can just add the above example to your rc.local file which
+	is in /etc/rc.d/ on my Linux box and /etc/ on my OpenBSD box.
+	
+	Example:
+	(rc.local start)
+	....
+	....
+	....
+	....
+	${INSTALLDIR}/${BIN} /dev/ttyS0 "/sbin/shutdown -h now" &
+	(rc.local end)
+
+	Obviously replace the ${INSTALLDIR} and ${BIN} with the
+	corrisponding info from the Makefile.
+
+# END OF FILE
